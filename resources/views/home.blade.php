@@ -15,7 +15,7 @@
                             </a>
                         </div>
                         <div class="col-md-6 text-center">
-                            <a href="{{ route('empoloyee.index') }}" role="button" class="btn btn-primary">
+                            <a href="{{ route('employee.index') }}" role="button" class="btn btn-primary">
                                 Empleyees
                             </a>
                         </div>

@@ -21,7 +21,7 @@ Auth::routes(['register' => false]);
 Route::group(['middleware' => ['auth'],'prefix' => 'dashboard'],function(){
 
     Route::get('/', 'DashboardController@index')->name('dashboard');
-    Route::resource('empoloyee','EmployeeController');
+    Route::resource('employee','EmployeeController');
     Route::resource('company','CompanyController');
 
 });

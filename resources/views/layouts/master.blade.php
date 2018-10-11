@@ -22,10 +22,18 @@
 <body>
 <div id="app">
     @include('include.nav')
-    @include('include.messages')
+    
+    <div class="container-fluid">
 
-    @yield('content')
+        <div class="row justify-content-end mt-2">
+             <div class="col-md-3 text-right">
+                @yield('breadcrumps')
+             </div>
+       </div>
 
+      @yield('content')
+    
+    </div>
     @include('include.footer')
 </div>
 </body>

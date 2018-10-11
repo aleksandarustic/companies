@@ -1,71 +1,43 @@
 @extends('layouts.master')
 
+
+@section('breadcrumps')
+     <div class="breadcrumb bg-transparent">
+        <a class="breadcrumb-item" href="{{route('dashboard')}}">Dashboard</a>
+        <a class="breadcrumb-item" href="{{route('employee.index')}}">Employees</a>
+        <span class="breadcrumb-item active">{{$employee->firstname}} {{$employee->lastname}}</span>
+    </div>
+@endsection
+
+
 @section('content')
-<div class="container-fluid">
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-11 col-sm-12 col-xs-12">
-            <div class="card">
-                <div class="card-header">
 
-                    <div class="row">
-                        <div class="col-md-9">
-                            <h3 class="card-title">Companies Table</h3>
-                        </div>
-                        <div class="col-md-3 text-right">
-                            <a href="{{route('company.create')}}" role="button" class="btn btn-success pull-right" > Add New <i class="fas fa-building"></i></a>
-                        </div>
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-sm-12 col-xs-12">
+
+        <div class="card">
+            <h5 class="card-header">{{$employee->firstname}} {{$employee->lastname}}</h5>
+        
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Id: </strong>{{$employee->id}}</li>
+                <li class="list-group-item"><strong>Email: </strong>{{$employee->email}}</li>
+                <li class="list-group-item"><strong>Phone: </strong>{{$employee->phone}}</li>
+                <li class="list-group-item"><strong>Company: </strong>{{$employee->employee_company->name}}</li>
+                <li class="list-group-item"><strong>Created At: </strong>{{$employee->created_at}}</li>
+            </ul>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <a href="{{route('employee.edit',$employee->id)}}" role="button" class="btn btn-primary">Edit</a>
                     </div>
-
+                    <div class="col-md-4 offset-md-4">
+                        {!! Form::open(['action' => ['EmployeeController@destroy',$employee->id] ,'method' => 'POST' ])
+                        !!}
+                        {!! Form::hidden('_method','DELETE') !!}
+                        {!! Form::submit('Delete',['class' => 'btn-danger btn']) !!}
+                        {!! Form::close() !!} </div>
                 </div>
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-
-                            <table class="table">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Id</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Website</th>
-                                    <th scope="col">Logo</th>
-                                    <th scope="col">Modify</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($companies as $company)
-                                    <tr>
-                                        <td>{{$company->id}}</td>
-                                        <td>{{$company->name}}</td>
-                                        <td>{{$company->email}}</td>
-                                        <td>{{$company->website}}</td>
-                                        <td>
-                                            <div class="text-center">
-                                                <img src="{{asset('storage/'.$company->logo)}}" class="img-fluid img-thumbnail table-images" alt="Company logo">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="row">
-                                                <a href="{{route('company.edit',$company->id)}}" role="button"  class="btn-outline-primary btn mr-1"> <i class="fas fa-edit "></i></a>
-
-                                                {!! Form::open(['action' => ['CompanyController@destroy',$company->id] ,'method' => 'POST' ])  !!}
-                                                {!! Form::hidden('_method','DELETE') !!}
-                                                {!! Form::submit('Delete',['class' => 'btn-outline-danger btn']) !!}
-                                                {!! Form::close() !!}
-                                            </div>
-
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-
-                            {{$companies->links()}}
-
-
-
-
-            </div>
-            </div>
             </div>
         </div>
     </div>

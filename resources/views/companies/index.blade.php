@@ -1,8 +1,16 @@
 @extends('layouts.master')
 
+@section('breadcrumps')
+     <div class="breadcrumb bg-transparent">
+        <a class="breadcrumb-item" href="{{route('dashboard')}}">Dashboard</a>
+        <span class="breadcrumb-item active">Companies</span>
+    </div>
+@endsection
+
+
 @section('content')
-<div class="container-fluid">
-    <div class="row justify-content-center mt-5">
+    <div class="row justify-content-center">  
+
         <div class="col-md-10 col-sm-12 col-xs-12">
             <div class="card">
                 <div class="card-header">
@@ -18,6 +26,9 @@
 
                 </div>
                 <div class="card-body">
+
+                    @include('include.messages')
+
                     <div class="table-responsive-lg">
 
                             <table class="table">
@@ -46,6 +57,7 @@
                                         <td>
                                             <div class="row">
                                                 <a href="{{route('company.edit',$company->id)}}" role="button"  class="btn-outline-primary btn mr-1"> <i class="fas fa-edit "></i></a>
+                                                <a href="{{route('company.show',$company->id)}}" role="button"  class="btn-outline-primary btn mr-1"> <i class="fas fa-eye"></i></a>
 
                                                 {!! Form::open(['action' => ['CompanyController@destroy',$company->id] ,'method' => 'POST' ])  !!}
                                                 {!! Form::hidden('_method','DELETE') !!}
@@ -69,5 +81,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection

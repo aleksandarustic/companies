@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\Company;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -14,7 +15,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        $employees = Employee::orderBy('created_at', 'desc')->with('employee_company')->paginate(10);
+        return view('employees.index')->with('employees',$employees);
     }
 
     /**
@@ -24,7 +26,8 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        $companies = Company::pluck('name', 'id');;
+        return view('employees.create')->with('companies',$companies);
     }
 
     /**
@@ -35,7 +38,31 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'firstname' => 'required|string|max:125',
+            'lastname' => 'required|string|max:125',
+            'phone' => 'nullable|string|max:125',
+            'email'=> 'nullable|email|max:125|unique:employees',
+            'company'=> 'required|integer|exists:companies,id',
+        ]);
+
+        $employee = new Employee();
+        $employee->firstname = $request->input('firstname');
+        $employee->lastname = $request->input('lastname');
+        $employee->email = $request->input('email');
+        $employee->phone =$request->input('phone');
+        $employee->company = $request->input('company');
+
+        if($employee->save()){
+
+            return redirect()->route('employee.index')->with('message','Employee has been successfuly created');
+        }
+        else{
+            return redirect()->route('employee.create');
+
+        }
+
+
     }
 
     /**
@@ -44,9 +71,10 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function show(Employee $employee)
+    public function show($id)
     {
-        //
+        $employee = Employee::where('id', $id)->with('employee_company')->firstOrFail();
+        return view('employees.show')->with('employee',$employee);
     }
 
     /**
@@ -55,9 +83,11 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function edit(Employee $employee)
+    public function edit($id)
     {
-        //
+        $employee = Employee::findOrFail($id);
+        $companies = Company::pluck('name', 'id');;
+        return view('employees.edit')->withEmployee($employee)->withCompanies($companies);
     }
 
     /**
@@ -67,9 +97,28 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Employee $employee)
+    public function update(Request $request,$id)
     {
-        //
+
+        $employee = Employee::findOrFail($id);
+
+        $this->validate($request,[
+            'firstname' => 'required|string|max:125',
+            'lastname' => 'required|string|max:125',
+            'phone' => 'nullable|string|max:125',
+            'email'=> 'nullable|email|max:125|unique:employees,email,'.$employee->id,
+            'company'=> 'required|integer|exists:companies,id',
+        ]);
+        
+        if( $employee->update($request->input())){
+
+            return redirect()->route('employee.index')->with('message','Employee has been successfuly updated');
+        }
+        else{
+            return redirect()->route('employee.create');
+
+        }
+
     }
 
     /**
@@ -78,8 +127,11 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Employee $employee)
+    public function destroy($id)
     {
-        //
+        $employee = Employee::findOrFail($id);
+        $employee->delete();
+
+        return redirect()->route('employee.index')->with('message','Employee has been successfuly deleted');
     }
 }

@@ -1,8 +1,15 @@
 @extends('layouts.master')
 
+@section('breadcrumps')
+     <div class="breadcrumb bg-transparent">
+        <a class="breadcrumb-item" href="{{route('dashboard')}}">Dashboard</a>
+        <a class="breadcrumb-item" href="{{route('company.index')}}">Companies</a>
+        <span class="breadcrumb-item active">Edit {{$company->name}}</span>
+    </div>
+@endsection
+
 @section('content')
-    <div class="container-fluid">
-        <div class="row justify-content-center mt-5">
+        <div class="row justify-content-center mt-2">
             <div class="col-md-6 col-sm-10 col-xs-12">
                 <div class="card">
                     <div class="card-header">
@@ -55,5 +62,4 @@
                 </div>
             </div>
         </div>
-    </div>
 @endsection

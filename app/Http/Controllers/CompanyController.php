@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class CompanyController extends Controller
 {
@@ -66,6 +68,14 @@ class CompanyController extends Controller
         $company->logo = $fileNameToStore;
 
         if($company->save()){
+
+            Mail::raw('New company has been created!', function($message)
+            {
+                $message->subject('Company created');
+
+                $message->to(Auth::user()->email);
+            });
+
 
             return redirect()->route('company.index')->with('message','User has been successfuly created');
         }

@@ -1,20 +1,17 @@
-@extends('layouts.master')
-
+@extends('layouts.dashboard')
 
 @section('breadcrumps')
-     <div class="breadcrumb bg-transparent">
-        <a class="breadcrumb-item" href="{{route('dashboard')}}">Dashboard</a>
-        <a class="breadcrumb-item" href="{{route('employee.index')}}">Employees</a>
-        <span class="breadcrumb-item active">{{$employee->firstname}} {{$employee->lastname}}</span>
-    </div>
-@endsection
 
+        <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{route('employee.index')}}">Employees</a></li>
+        <li class="breadcrumb-item active">{{$employee->firstname}} {{$employee->lastname}}</li>
+  
+@endsection
 
 @section('content')
 
-
 <div class="row justify-content-center">
-    <div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="col-md-9 col-sm-12 col-xs-12">
 
         <div class="card">
             <h5 class="card-header">{{$employee->firstname}} {{$employee->lastname}}</h5>

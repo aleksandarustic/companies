@@ -10,6 +10,9 @@
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{ route('employee.index') }}" class="nav-link">Employees</a>
       </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ url('/') }}" class="nav-link">Home Page</a>
+      </li>
     </ul>
 
 

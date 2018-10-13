@@ -11,7 +11,7 @@
 @section('content')
 
 <div class="row justify-content-center">
-    <div class="col-md-9 col-sm-12 col-xs-12">
+    <div class="col-md-9 col-lg-7 col-sm-12 col-xs-12">
 
         <div class="card">
             <h5 class="card-header">{{$employee->firstname}} {{$employee->lastname}}</h5>

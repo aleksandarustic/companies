@@ -1,14 +1,14 @@
 @extends('layouts.dashboard')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 offset-md-1">
                 @include('include.messages')
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Employess Table</h3>

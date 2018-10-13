@@ -42,7 +42,7 @@ class CompanyController extends Controller
     {
         $this->validate($request,[
             'name' => 'required|string|max:125',
-            'email'=> 'sometimes|email|max:125|unique:companies',
+            'email'=> 'nullable|email|max:125|unique:companies',
             'website'=> 'nullable|string|max:125',
             'logo' => 'image|nullable|max:1999|dimensions:min_width=100,min_height=100'
         ]);
@@ -57,7 +57,7 @@ class CompanyController extends Controller
             $request->file('logo')->storeAs('public',$fileNameToStore);
         }
         else{
-            $fileNameToStore = 'noimage.jpg';
+            $fileNameToStore = 'noimage.png';
         }
 
 
@@ -73,18 +73,19 @@ class CompanyController extends Controller
             {
                 $message->subject('Company created');
 
-                $message->to(Auth::user()->email);
+                // $message->to(Auth::user()->email);
+
+                $message->to('aleksandarustic2@gmail.com');
             });
 
 
-            return redirect()->route('company.index')->with('message','User has been successfuly created');
+            return redirect()->route('company.index')->with('message','Company has been successfuly created');
         }
         else{
             return redirect()->route('company.create');
 
         }
 
-       // return redirect('/dashboard/company')->with('success','Post Created');
     }
 
     /**
@@ -125,7 +126,7 @@ class CompanyController extends Controller
 
         $this->validate($request,[
             'name' => 'required|string|max:125',
-            'email'=> 'sometimes|email|max:125|unique:companies,email,'.$company->id,
+            'email'=> 'nullable|email|max:125|unique:companies,email,'.$company->id,
             'website'=> 'nullable|string|max:125',
             'logo' => 'image|nullable|max:1999|dimensions:min_width=100,min_height=100'
         ]);

@@ -106,7 +106,7 @@ class EmployeeController extends Controller
             'firstname' => 'required|string|max:125',
             'lastname' => 'required|string|max:125',
             'phone' => 'nullable|string|max:125',
-            'email'=> 'nullable|email|max:125|unique:employees,email,'.$employee->email,
+            'email'=> 'nullable|email|max:125|unique:employees,email,'.$employee->id,
             'company'=> 'required|integer|exists:companies,id',
         ]);
         

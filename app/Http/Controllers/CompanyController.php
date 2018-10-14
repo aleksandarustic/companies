@@ -69,20 +69,27 @@ class CompanyController extends Controller
 
         if($company->save()){
 
-            Mail::raw('New company has been created!', function($message)
-            {
-                $message->subject('Company created');
 
-                // $message->to(Auth::user()->email);
+            try{
+                Mail::raw('New company has been created!', function($message)
+                {
+                    $message->subject('Company created');
 
-                $message->to('aleksandarustic2@gmail.com');
-            });
+                    // $message->to(Auth::user()->email);
+
+                    $message->to('aleksandarustic2@gmail.com');
+                });
+
+            }
+            catch (\Exception $e){
+                return redirect()->route('company.index')->with('message','Company has been successfuly created')->with('error','Error with sending email');
+            }
 
 
             return redirect()->route('company.index')->with('message','Company has been successfuly created');
         }
         else{
-            return redirect()->route('company.create');
+            return redirect()->route('company.create')->with('error','Company has not been successfuly created');
 
         }
 

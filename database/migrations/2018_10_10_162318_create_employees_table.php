@@ -17,7 +17,7 @@ class CreateEmployeesTable extends Migration
             $table->increments('id');
             $table->string('firstname');
             $table->string('lastname');
-            $table->string('phone');
+            $table->string('phone')->nullable();
             $table->integer('company')->unsigned();
             $table->string('email')->nullable()->unique();
             $table->timestamps();

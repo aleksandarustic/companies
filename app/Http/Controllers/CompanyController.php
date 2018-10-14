@@ -82,7 +82,7 @@ class CompanyController extends Controller
 
             }
             catch (\Exception $e){
-                return redirect()->route('company.index')->with('message','Company has been successfuly created')->with('error','Error with sending email:'.$e);
+                return redirect()->route('company.index')->with('message','Company has been successfuly created')->with('error','Error with sending email:');
             }
 
 
